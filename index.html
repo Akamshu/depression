@@ -29,22 +29,22 @@
         color: #fff;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-.image-container a{
-    background-color: transparent;
-    position: relative;
-    font-size: 30px;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    top: 40px;
-    text-decoration: none;
 
-    
+    .image-container a {
+        background-color: transparent;
+        position: relative;
+        font-size: 30px;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        top: 40px;
+        text-decoration: none;
+    }
 
-}
     .cards {
         position: relative;
-        width: 400px;
+        width: 100%; /* Adjust width for responsiveness */
+        max-width: 400px; /* Limit maximum width for larger screens */
         height: 200px;
         margin-bottom: 20px;
         font-size: 14px;
@@ -94,7 +94,22 @@
         }
     }
 
+    /* Media Queries for responsiveness */
+
+    @media (max-width: 768px) {
+        .cards {
+            max-width: 300px; /* Adjust width for smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .cards {
+            max-width: 250px; /* Further adjust width for very small screens */
+        }
+    }
 </style>
+
+
 </head>
 <body>
 <div class="container">
