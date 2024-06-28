@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Depression Detection</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    textarea {
+        width: 96%;
+        height: 150px; /* Adjust height as needed */
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        resize: vertical; /* Allow vertical resizing of textarea */
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #result {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    button .fas{
+        font-size: 25px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Depression Detection</h1>
+    <label for="userInput">Enter your feelings:</label><br>
+    <textarea id="userInput" placeholder="Type here..." rows="5" required></textarea><br>
+    <button onclick="checkDepression()">Check for Depression</button>
+    <button onclick="startVoiceRecognition()"><i class="fas fa-microphone"></i> </button>
+    
+    <p id="result"></p>
+</div>
+
+<script>
+// Function to analyze text input for signs of depression
+function detectDepression(text) {
+    // List of keywords or phrases indicating potential depression
+    const depressionKeywords = [
+        'sad', 'worthless', 'hopeless', 'lonely', 'suicidal', 'depressed', 'feeling hopeless', 'lack of interest in activities', 
+        'persistent sadness', 'low energy levels', 'difficulty concentrating', 'changes in appetite', 'sleep problems', 
+        'feelings of worthlessness', 'thoughts of death or suicide', 'social withdrawal', 'loss of motivation', 'irritability', 
+        'sense of guilt', 'feeling empty', 'crying spells', 'loss of pleasure', 'fatigue', 'poor self-esteem', 
+        'trouble making decisions', 'loss of interest in hobbies', 'physical aches and pains', 'increased sensitivity', 
+        'difficulty remembering things', 'feeling overwhelmed', 'difficulty functioning', 'avoiding social situations', 
+        'excessive worrying', 'feeling anxious', 'panic attacks', 'feeling isolated', 'mood swings', 'insomnia', 
+        'weight changes', 'digestive problems', 'feeling like a burden', 'emotional numbness', 'loss of libido', 
+        'difficulty getting out of bed', 'self-destructive behavior', 'hopelessness', 'feelings of worthlessness', 
+        'self-blame', 'self-harm', 'suicidal ideation', 'feeling trapped', 'sense of despair', 'loneliness', 
+        'isolation', 'guilt', 'anger', 'agitation', 'restlessness', 'loss of interest in personal hygiene', 
+        'neglecting responsibilities', 'feeling misunderstood', 'feeling disconnected', 'loss of pleasure in all activities', 
+        'feelings of helplessness', 'loss of appetite', 'overeating', 'feeling tired all the time', 
+        'physical pain without cause', 'headaches', 'digestive problems', 'changes in sleep patterns', 
+        'loss of interest in socializing', 'avoidance of social situations', 'difficulty concentrating', 
+        'memory problems', 'loss of motivation', 'feeling worthless', 'feeling ashamed', 'crying spells', 
+        'self-criticism', 'difficulty making decisions', 'lack of concentration', 'fatigue', 'irritability', 
+        'unexplained aches and pains', 'thoughts of death or suicide', 'decreased energy', 'slowed thinking or speaking', 
+        'insomnia or excessive sleeping', 'appetite or weight changes', 'restlessness or irritability', 
+        'feelings of guilt or worthlessness', 'difficulty concentrating', 'indecisiveness', 'decreased energy', 
+        'fatigue', 'restlessness', 'feelings of worthlessness', 'loss of interest in activities', 
+        'changes in appetite or weight', 'sleep disturbances', 'feeling hopeless', 'thoughts of death or suicide', 
+        'loss of interest in daily activities', 'irritability', 'loss of pleasure in activities', 'social withdrawal', 
+        'low self-esteem', 'difficulty concentrating', 'indecisiveness', 'forgetfulness', 'trouble sleeping or sleeping too much', 
+        'low energy or fatigue', 'changes in appetite', 'loss of interest in hobbies or activities', 'feelings of sadness or emptiness', 
+        'feelings of guilt or worthlessness', 'thoughts of death or suicide', 'trouble thinking', 'concentrating', 'making decisions', 
+        'remembering things', 'restlessness or irritability', 'physical symptoms', 'that dont respond', 'to treatment', 'such as headaches', 
+        'digestive disorders', 'and chronic pain', 'a lack of energy', 'feeling tired all the time', 'or sleeping too much', 
+        'overeating or not wanting to eat at all', 'possibly leading to rapid weight gain or loss', 'feelings of guilt', 
+        'worthlessness', 'and helplessness', 'thoughts of death', 'suicide', 'or suicide attempts', 'agitation', 
+        'restlessness', 'and irritability', 'slow speech or body movements', 'and social withdrawal'
+    ];
+
+    // Convert text to lowercase for case-insensitive comparison
+    const lowercaseText = text.toLowerCase();
+
+    // Check if any depression keywords/phrases are present in the text
+    for (let keyword of depressionKeywords) {
+        if (lowercaseText.includes(keyword)) {
+            return true; // Found a depression indicator
+        }
+    }
+
+    return false; // No depression indicators found
+}
+
+// Function to handle button click event
+function checkDepression() {
+    const userInput = document.getElementById('userInput').value;
+    const resultElement = document.getElementById('result');
+
+    // Detect depression
+    const isDepressed = detectDepression(userInput);
+
+    // Display result
+    if (isDepressed) {
+        resultElement.textContent = "Warning: The text you entered contains some signs that could be related to depression. We recommend reaching out to a mental health professional for an assessment.";
+    } else {
+        resultElement.textContent = "No signs of depression detected based on the keywords used. Remember, mental health is important. If you're concerned about your well-being, please consider seeking professional help.";
+    }
+}
+
+// Function to start voice recognition
+function startVoiceRecognition() {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        const speechResult = event.results[0][0].transcript;
+        document.getElementById('userInput').value = speechResult;
+        checkDepression();
+    };
+
+    recognition.onerror = function(event) {
+        console.error('Speech recognition error:', event.error);
+    };
+}
+</script>
+</body>
+</html>
