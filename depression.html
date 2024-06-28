@@ -34,7 +34,7 @@
     }
 
     textarea {
-        width: 96%;
+        width: 80%; /* Adjusted to occupy 80% of the screen */
         height: 150px; /* Adjust height as needed */
         padding: 10px;
         margin-bottom: 10px;
@@ -60,10 +60,22 @@
         margin-top: 10px;
         font-weight: bold;
     }
-    button .fas{
-        font-size: 25px;
+
+    /* Media Queries for responsiveness */
+
+    @media (max-width: 768px) {
+        .container {
+            width: 80%; /* Adjust container width for smaller screens */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        textarea {
+            width: 100%; /* Make textarea occupy full width on smaller screens */
+        }
     }
 </style>
+
 </head>
 <body>
 <div class="container">
