@@ -65,7 +65,7 @@
         font-size: 25px;
     }
 
- /* Loading Modal Styles */
+/* Loading Modal Styles */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Fixed positioning */
@@ -86,7 +86,23 @@
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     max-width: 300px; /* Optional: Adjust modal size */
-    margin: 0 auto; /* Optional: Center in the middle of the screen */
+    margin: 0 auto; /* Center in the middle of the screen */
+}
+
+/* Spinner Styles */
+.spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #007bff; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 </style>
@@ -103,18 +119,21 @@
     <p id="result"></p>
 </div>
 
+
 <!-- Loading Modal -->
 <div id="loadingModal" class="modal">
     <div class="modal-content">
+        <div class="spinner"></div> <!-- Spinner element -->
         <p>Analyzing your input, please wait...</p>
     </div>
 </div>
+
 
 <script>
 // Function to analyze text input for signs of depression
 function detectDepression(text) {
     const depressionKeywords = [
-        'sad', 'worthless', 'hopeless', 'lonely', 'suicidal', 'depressed', 'feeling hopeless', 'lack of interest in activities', 
+        'sad', 'worthless', 'hopeless', 'lonely', 'suicide', 'depressed', 'feeling hopeless', 'lack of interest in activities', 
         'persistent sadness', 'low energy levels', 'difficulty concentrating', 'changes in appetite', 'sleep problems', 
         'feelings of worthlessness', 'thoughts of death or suicide', 'social withdrawal', 'loss of motivation', 'irritability', 
         'sense of guilt', 'feeling empty', 'crying spells', 'loss of pleasure', 'fatigue', 'poor self-esteem', 
@@ -158,7 +177,7 @@ function checkDepression() {
         } else {
             resultElement.textContent = "No signs of depression detected based on the keywords used. Remember, mental health is important. If you're concerned about your well-being, please consider seeking professional help.";
         }
-    }, 2000); // Simulate a 2-second delay for processing
+    }, 5000); // Simulate a 2-second delay for processing
 }
 
 // Function to start voice recognition
